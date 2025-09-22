@@ -1,29 +1,14 @@
-import StatusBadge from "./StatusBadge";
-
-export default function JobCard({ job, onEdit }) {
+export default function JobCard({ job, onEdit, onToggleStatus }) {
   return (
-    <div className="p-4 border rounded-lg shadow-sm bg-white flex justify-between items-center">
+    <div className="border p-4 rounded-md flex justify-between items-center">
       <div>
-        <h3 className="text-lg font-semibold">{job.title}</h3>
-        <div className="flex gap-2 mt-1">
-          {job.tags.map((tag, i) => (
-            <span
-              key={i}
-              className="px-2 py-0.5 bg-gray-200 rounded-full text-xs"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+        <h3 className="font-bold">{job.title}</h3>
+        <p className="text-sm text-gray-600">{job.tags.join(", ")}</p>
+        <span className={`px-2 py-1 text-xs rounded ${job.status === "active" ? "bg-green-200 text-green-800" : "bg-gray-200 text-gray-700"}`}>{job.status}</span>
       </div>
-      <div className="flex gap-3 items-center">
-        <StatusBadge status={job.status} />
-        <button
-          onClick={onEdit}
-          className="px-3 py-1 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-        >
-          Edit
-        </button>
+      <div className="flex gap-2">
+        <button className="px-2 py-1 bg-blue-600 text-white rounded-md text-sm" onClick={onEdit}>Edit</button>
+        <button className="px-2 py-1 bg-gray-400 text-white rounded-md text-sm" onClick={onToggleStatus}>{job.status === "active" ? "Archive" : "Unarchive"}</button>
       </div>
     </div>
   );
